@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: install gcc 13
         run: |
+          sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa -y
           sudo apt update
           sudo apt install gcc-13 g++-13
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 10 --slave /usr/bin/g++ g++ /usr/bin/g++-13
