@@ -23,7 +23,7 @@ jobs:
       - name: install gcc 14
         run: |
           sudo add-apt-repository "deb https://ppa.launchpadcontent.net/ubuntu-toolchain-r/ppa/ubuntu noble main" -y && sudo apt update
-          sudo apt install g++-14 gcc-14 -y
+          sudo apt install g++-14 gcc-14 ninja-build -y
           sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 90 --slave /usr/bin/g++ g++ /usr/bin/g++-14
       - name: Install sonar-scanner and build-wrapper
         uses: sonarsource/sonarcloud-github-c-cpp@v3
