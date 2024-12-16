@@ -29,9 +29,7 @@ jobs:
         uses: sonarsource/sonarcloud-github-c-cpp@v3
       - name: Run build-wrapper
         run: |
-          mkdir build
-          cmake -S . -B build
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
+          ./Meta/ladybird.sh build ladybird
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
