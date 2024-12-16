@@ -22,8 +22,9 @@ jobs:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: install gcc 12
         run: |
-          sudo apt install --reinstall gcc-12
+          sudo apt install --reinstall gcc-12 g++-12
           sudo ln -s -f /usr/bin/gcc-12 /usr/bin/gcc
+          sudo ln -s /usr/bin/g++-12 /usr/bin/g++
       - name: Install sonar-scanner and build-wrapper
         uses: sonarsource/sonarcloud-github-c-cpp@v3
       - name: Run build-wrapper
