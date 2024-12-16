@@ -23,9 +23,9 @@ jobs:
       - name: install gcc 13
         run: |
           sudo add-apt-repository ppa:ubuntu-toolchain-r/ppa -y
-          sudo apt update
-          sudo apt install gcc-13 g++-13
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 10 --slave /usr/bin/g++ g++ /usr/bin/g++-13
+          sudo apt update && sudo apt search g++
+          sudo apt install g++-14 gcc-14 -y
+          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 90 --slave /usr/bin/g++ g++ /usr/bin/g++-14
       - name: Install sonar-scanner and build-wrapper
         uses: sonarsource/sonarcloud-github-c-cpp@v3
       - name: Run build-wrapper
