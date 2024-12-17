@@ -12,27 +12,22 @@ permissions:
 
 jobs:
   build:
-    name: Build
+    name: Build and analyze
     runs-on: ubuntu-24.04
     env:
-      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+      BUILD_WRAPPER_OUT_DIR: ./Build # Directory where build-wrapper output will be placed
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: install gcc 14
-        run: |
-          sudo add-apt-repository "deb https://ppa.launchpadcontent.net/ubuntu-toolchain-r/ppa/ubuntu noble main" -y && sudo apt update
-          sudo apt install g++-14 gcc-14 ninja-build -y
-          sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 90 --slave /usr/bin/g++ g++ /usr/bin/g++-14
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install sonar-scanner and build-wrapper
-        uses: sonarsource/sonarcloud-github-c-cpp@v3
+        uses: SonarSource/sonarcloud-github-c-cpp@v3
       - name: Run build-wrapper
         run: |
-          bash Meta/ladybird.sh build ladybird
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} bash Meta/ladybird.sh build ladybird
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }} # Put the name of your token here
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           sonar-scanner --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
